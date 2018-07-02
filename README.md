@@ -94,6 +94,7 @@ alignment    |string   |是       |'left'|标签显示的位置(左右)
 cornerRadios |number   |否       |      |标签现实的位置(角半径)
 style        |style    |是       |      |标签样式
 textStyle    |style    |是       |      |标签内字符样式
+
 -示例
 ```
     <CornerLabel
@@ -109,15 +110,16 @@ textStyle    |style    |是       |      |标签内字符样式
 #####CommonExpandableList(可折叠列表)
 - 属性
 
-名称 | 格式类型 | 是否必选 | 默认 | 描述 
---------|--------
-data|array|是||为CommonExpandableList中的数据，数组中每个对象由groupHeaderData和groupListData构成
-style|object|是||作用在CommonExpandableList上的样式
-groupStyle|object|是||作用在每个group上的样式
-groupSpacing|number|否|0|group之间的间隙
-implementedBy|string|否|'FlatList'|组件实现的方式，一共有'View','ListView','FlatList'三种方式可选
-renderGroupHeader|function|是||渲染GroupHeader的方法
-renderGroupListItem|function|是||渲染GroupListItem的方法
+名称                | 格式类型 | 是否必选 | 默认      | 描述 
+------------------- | ------- | ------- | -------- |
+data                |array    |是        |          |为CommonExpandableList中的数据，数组中每个对象由groupHeaderData和groupListData构成
+style               |object   |是        |          |作用在CommonExpandableList上的样式
+groupStyle          |object   |是        |          |作用在每个group上的样式
+groupSpacing        |number   |否        |0         |group之间的间隙
+implementedBy       |string   |否        |'FlatList'|组件实现的方式，一共有'View','ListView','FlatList'三种方式可选
+renderGroupHeader   |function |是        |          |渲染GroupHeader的方法
+renderGroupListItem |function |是        |          |渲染GroupListItem的方法
+
 - 示例
  ```
    <CommonExpandableList
