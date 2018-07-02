@@ -68,6 +68,7 @@ return (
 
 
 -  可传参数介绍
+
 属性名称  | 是否必选 | 格式     | 描述 
 -------- | -------- | ------- |---
 url      |是        |string   |要访问的接口文件名 如 demo;后缀名不需要输入,默认后缀名.do
@@ -86,6 +87,7 @@ encoded  |否        |string   |编码类型 默认 utf-8 (一般情况下不用
 
 #####CornerLabel(图标标签)
 - 属性
+
 名称         | 格式类型 | 是否必选 | 默认 | 描述 
 -----------  | ------- | ------- | ---- | --- 
 alignment    |string   |是       |'left'|标签显示的位置(左右)
@@ -106,6 +108,7 @@ textStyle    |style    |是       |      |标签内字符样式
 
 #####CommonExpandableList(可折叠列表)
 - 属性
+
 名称 | 格式类型 | 是否必选 | 默认 | 描述 
 --------|--------
 data|array|是||为CommonExpandableList中的数据，数组中每个对象由groupHeaderData和groupListData构成
