@@ -111,7 +111,7 @@ textStyle    |style    |是       |      |标签内字符样式
 - 属性
 
 名称                | 格式类型 | 是否必选 | 默认      | 描述 
-------------------- | ------- | ------- | -------- |
+------------------- | ------- | ------- | -------- | ----
 data                |array    |是        |          |为CommonExpandableList中的数据，数组中每个对象由groupHeaderData和groupListData构成
 style               |object   |是        |          |作用在CommonExpandableList上的样式
 groupStyle          |object   |是        |          |作用在每个group上的样式
