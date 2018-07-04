@@ -8,8 +8,10 @@ import {
     Text,
     View,
     ScrollView,
-    Alert
-
+    Alert,
+    ActivityIndicator,
+    Dimensions,
+    Modal
 } from 'react-native';
 import CommonSudoku from '../../Common/CommonSudoku';
 import {MessageBox} from 'IFTide';
@@ -20,7 +22,8 @@ import { RiskSudokuData } from "../../Res/Data/RiskSudoku";
 import { InformationSudokuData } from "../../Res/Data/InformationSudoku";
 
 let pageNo = "1";
-
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class CompanyPagePage extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -45,6 +48,7 @@ export default class CompanyPagePage extends Component {
             InformationData:[],//存储列表数据
             InformationType:[], //存储九宫格跳转类型
             ErrorMsg: '',
+            visible: false,
         };
     }
     componentWillMount() {
@@ -57,7 +61,14 @@ export default class CompanyPagePage extends Component {
             InformationType:InformationSudokuData[1],
         })
     }
-
+    componentWillUnmount() {
+        this.timer && clearTimeout(this.timer)
+    }
+    _setModalVisible() {
+        this.setState({
+            visible: false,
+        })
+    }
     render() {
         const { state: {params}} = this.props.navigation
         let data = this.props.navigation.state.params.company
@@ -70,7 +81,22 @@ export default class CompanyPagePage extends Component {
                     title={'提示'}
                     detailText={this.state.ErrorMsg}
                     onClose={() => {}}
-                />
+                    />
+                <Modal
+                    visible={this.state.visible}
+                    animationType={'fade'}
+                    onReaquestClose={this._setModalVisible}
+                    backgroundColor='rgba(255,255,255,0)'
+                    transparent={true}
+                >
+                    <View style={styles.loadingCircle}>
+                        <ActivityIndicator
+                            animating={true}
+                            color='black'
+                            size='large'
+                        />
+                    </View>
+                </Modal>
                 <ScrollView style={styles.container}>
                     <View style={styles.seachResultList}>
                         <View style={styles.seachResultListTitle}>
@@ -164,6 +190,12 @@ export default class CompanyPagePage extends Component {
     }
     //跳转到列表页
     _onPressFn1 () {
+        this.setState({
+            visible: true,
+        })
+        this.timer = setTimeout(() => {
+            this._setModalVisible()
+        }, 2000)
         let thiz = this;
         let companyName = this.props.navigation.state.params.company.ENTNAME
         let pressRiskName = this.refs.RiskSudoku.state.name;
@@ -192,6 +224,13 @@ export default class CompanyPagePage extends Component {
 
     };
     _onPressFn2 () {
+        this.setState({
+            visible: true,
+        })
+        this.timer = setTimeout(() => {
+            this._setModalVisible()
+        }, 2000)
+
         let thiz = this;
         let companyName = this.props.navigation.state.params.company.ENTNAME;
         let companyID = this.props.navigation.state.params.company.ID;
@@ -263,8 +302,14 @@ export default class CompanyPagePage extends Component {
 
 
 const styles = StyleSheet.create({
+    loadingCircle: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: SCREEN_HEIGHT,
+        width: SCREEN_WIDTH,
+    },
     container: {
-
+        backgroundColor: '#F5FCFF',
     },
     sodoku:{
         marginTop:8,
