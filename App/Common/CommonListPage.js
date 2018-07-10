@@ -57,7 +57,7 @@ export default class CommonListPage extends Component{
 
     render(){
         const { state: {params}} = this.props.navigation;
-        console.log(this.state.data);
+  
         return(
             <View >
                 <FlatList
@@ -225,9 +225,11 @@ export default class CommonListPage extends Component{
         }else{
             pageNo++;
             //底部显示正在加载更多数据
+  
             this.setState({showFoot:0});
             //获取分页数据
             this.requestPageData();
+
         }
 
 
@@ -254,7 +256,7 @@ export default class CommonListPage extends Component{
             "size":"10"},function(res) {
 
             totalpage=Number(res.totalpage);
-            console.log(totalpage);
+
             //判断请求是否成功
             let respCode=res.respCode;
 
@@ -387,7 +389,7 @@ export default class CommonListPage extends Component{
         totalpage=Number(totalPage)
             //获取上级页面传来的参数
         let foot;
-        console.log(this.props.navigation.state.params.data);
+
         if((pageNo>=totalpage)){
             foot = 1;
         }else{
@@ -440,27 +442,6 @@ export default class CommonListPage extends Component{
         }
     }
 
-    //错误页面显示信息判断
-/*    handlerError=(code,Msg)=>{
-        if(code==="400"|| code==="404"||code==="444"||code==="445"|| code==="703")
-        {
-            msg="没有查到满足条件的信息";
-
-        }
-        else if(code==="1314"|| code==="1315"||code==="1316"||code==="1319"||code==="0001")
-        {
-            msg=Msg;
-        }
-        else
-        {
-            msg="查询过程中出现异常";
-        }
-        console.log(msg);
-        thiz.setState({
-            errorMsg:msg,
-            Code:code,
-        });
-    }*/
 }
 
 const styles =StyleSheet.create({

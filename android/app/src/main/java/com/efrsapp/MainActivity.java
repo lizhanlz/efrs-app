@@ -1,7 +1,9 @@
 package com.efrsapp;
-
+import android.graphics.Color;
+import android.os.Bundle;
 import com.facebook.react.ReactActivity;
-
+import com.facebook.react.bridge.ReactContext;
+import com.mehcode.reactnative.splashscreen.SplashScreen;
 public class MainActivity extends ReactActivity {
 
     /**
@@ -11,5 +13,14 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "efrsapp";
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+      // Show the js-controlled splash screen
+      SplashScreen.show(this, getReactInstanceManager());
+
+      super.onCreate(savedInstanceState);
+
+      // [...]
     }
 }

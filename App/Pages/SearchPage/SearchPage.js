@@ -14,15 +14,21 @@ import {
     ScrollView,
     FlatList,
     ActivityIndicator,
+    StatusBar,
+    Platform
 } from 'react-native';
 import { MessageBox,Dialog,Label } from 'IFTide';
 import Fetch from "../../Fetch/DataFactories";
 import Soat from "../../Utils/JsonUtils";
+var Dimensions = require('Dimensions');
+var {width,height} = Dimensions.get('window');
 const selectMoneyData = ["不限","0-100万","100-200万","200-500万","500-1000万","1000万以上",];
 const selectTimeData = ["不限","1年内","1-5年","5-10年","10-15年","15年以上",];
 const soatData = ["按成立日期升序","按成立日期降序","按注册资本升序","按注册资本降序"];
 let search = false;//判断是否点击搜索
 let currentPage = 1;//当前第几页
+let phoneType = 10;
+let soatTop = 60;
 let params = {"serviceKey": "模糊查询","reqParams":{"page":currentPage,"areaCode":'',"industryPhy":'',"key":'',"size":'10',"esdateStart":'',"esdateEnd":'',"regcapGte":'',"regcapLte":'',"enableAggregate":"true"}};//当前第几页
 export default class SearchPage extends Component {
     constructor (props) {
@@ -56,13 +62,23 @@ export default class SearchPage extends Component {
             view:false,
         }
     }
-    componentDidMount () {
+    componentWillMount () {
        // console.log(dataJson);
       //  Fetch.fetchData('searchData',{},(res)=>{
       //       this.setState({data:res.data});
             //console.log(View);
       //   });
-       // console.log(this.props.navigation.state.params.info)
+        if(Platform.OS === 'ios'){
+            phoneType = 20;
+            soatTop = 70;
+            console.log(soatTop)
+        }
+        if(Platform.OS === 'ios' && height === 812){
+            phoneType = 44;
+            soatTop = 94;
+            //console.log(Platform,height)
+        }
+       // console.log(Platform,height)
     }
     //手动获取搜索结果
     getCompanyListData (){
@@ -79,7 +95,12 @@ export default class SearchPage extends Component {
                 this.alertSearch._show();
             }
             if (res.respCode === 'success'){
-                this.setState({listData:res.data.ENTERPRISES,refreshing:false,totalnum:res.totalnum,data:res.data});
+                if(search){
+                    this.setState({listData:res.data.ENTERPRISES,refreshing:false,totalnum:res.totalnum,data:res.data});
+                    search = false;
+                }else{
+                    this.setState({listData:res.data.ENTERPRISES,refreshing:false,totalnum:res.totalnum});
+                }
             }else if(res.respCode === 'failed'){
                 this.setState({msg:res.Errmsg,refreshing:false});
                 this.alertSearch._show();
@@ -600,7 +621,7 @@ export default class SearchPage extends Component {
         </View>);
         return (
             <View style={styles.container}>
-                <View style={styles.searchInput}>
+                <View style={[styles.searchInput,{marginTop:phoneType}]}>
                     <View>
                         <TouchableOpacity
                             onPress={()=>{this.props.navigation.goBack()}}
@@ -688,7 +709,7 @@ export default class SearchPage extends Component {
                     {/*</View>*/}
                 {/*</View>*/}
                 {/*历史记录结束*/}
-                <View style={[styles.seachResult,this.state.seachResult === false&&styles.seachResultHidden]}>
+                {this.state.seachResult?<View style={[styles.seachResult]}>
                     <View style={styles.seachSelect}>
                             <TouchableWithoutFeedback
                                 onPress={()=>{this.openSlect(1)}}
@@ -749,10 +770,10 @@ export default class SearchPage extends Component {
                         >
                         </FlatList>
                     </View>
-                    <TouchableWithoutFeedback
+                    {this.state.modal?<TouchableWithoutFeedback
                         onPress={()=>{this.setState({modal:false,textNum:0})}}
                     >
-                        <View style={[styles.seachValue,this.state.modal?styles.seachValueModalYes:styles.seachValueModalNo]}
+                        <View style={[styles.seachValue]}
                             //  View.props.onStartShouldSetResponderCapture:{(evt)=> true }
                         >
                             <TouchableWithoutFeedback
@@ -779,12 +800,12 @@ export default class SearchPage extends Component {
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>
-                    </TouchableWithoutFeedback>
-                </View>
-                <TouchableWithoutFeedback
+                    </TouchableWithoutFeedback>:null}
+                </View>:null}
+                {this.state.soat?<TouchableWithoutFeedback
                     onPress={()=>{this.setState({soat:false})}}
                 >
-                    <View style={[styles.sortWrapper,this.state.soat?styles.sortWrapperShow:styles.sortWrapperHidden]}>
+                    <View style={[styles.sortWrapper,{top:soatTop}]}>
                         <View style={styles.sortInner}>
                             {soatData.map((itme,index)=>{
                                 return(<TouchableWithoutFeedback
@@ -800,7 +821,7 @@ export default class SearchPage extends Component {
                              })}
                         </View>
                     </View>
-                </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback>:null}
                 <Modal
                 transparent={true}
                 visible={this.state.vioceModal}
@@ -852,7 +873,7 @@ const styles = StyleSheet.create({
         height:'100%',
         backgroundColor: 'rgba(0,0,0,0.2)',
         position:'absolute',
-        top:60,
+        top:40,
     },
     seachValueModalNo: {
         display:'none'
@@ -868,7 +889,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop:10,
         marginBottom:10,
-       // backgroundColor: 'blue',
+        //backgroundColor: 'blue',
     },
     historySearch:{
         // justifyContent: 'center',
@@ -886,6 +907,7 @@ const styles = StyleSheet.create({
     },
     textInput:{
         flex:1,
+        height:40,
         //backgroundColor: 'red',
     },
     textInputInner:{
@@ -1200,7 +1222,6 @@ const styles = StyleSheet.create({
         height:'100%',
         backgroundColor: 'rgba(0,0,0,0.1)',
         position:'absolute',
-        top:80,
     },
     sortWrapperHidden:{
         display:'none'

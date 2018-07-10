@@ -17,6 +17,7 @@ import MinePage from '../Pages/TabPages/MinePage/MinePage';
 // let token;
 var Dimensions = require('Dimensions');
 var {width,height} = Dimensions.get('window');
+import {setSpText,scaleSize} from '../Utils/Resolution';
 // let getToken = () =>{
 //     AsyncStorage.getItem('token').then((value)=>{
 //         token = value;
@@ -136,22 +137,22 @@ const Tab = TabNavigator({
             headerTitleStyle: {
                 alignSelf: 'center'
             },
-            tabBarOnPress:(obj) => {
-                AsyncStorage.getItem('token').then((value)=>{
-                    if (value){
-                        obj.jumpToIndex(obj.scene.index);
-                    }else{
-                        NavigationService.navigator("Login");
-                    }
-                });
-            }
+            // tabBarOnPress:(obj) => {
+            //     AsyncStorage.getItem('token').then((value)=>{
+            //         if (value){
+            //             obj.jumpToIndex(obj.scene.index);
+            //         }else{
+            //             NavigationService.navigator("Login");
+            //         }
+            //     });
+            // }
         }
     },
 
 }, {
     animationEnabled: true, // 切换页面时不显示动画
     tabBarPosition: 'bottom', // 导航栏显示在底端，android 默认显示在页面顶端
-    swipeEnable: true, // 禁止左右滑动
+    swipeEnable: false, // 禁止左右滑动
     backBehavior: 'none', // 按 back 键是否跳转到第一个 Tab，none 为不跳转
     tabBarOptions: {
         activeTintColor: '#e63c27', // 文字和图片选中颜色
@@ -160,18 +161,18 @@ const Tab = TabNavigator({
         indicatorStyle: {height: 0}, // android 中 TabBar 下面会显示一条线，高度设为 0 后就不显示线了，不知道还有没有其他隐藏方法
         style: {
             backgroundColor: 'white', // TabBar 背景色
-            height: 110*width/750,
+            height:scaleSize(110),
 
 
         },
         iconStyle:{
-            width:40*width/750,
-            height:40*width/750,
-            marginTop:3,
+            width:scaleSize(40),
+            height:scaleSize(40),
+            marginTop:scaleSize(3),
         },
         labelStyle: {
             fontSize: 12, // 文字大小
-            marginTop:5,
+            marginTop:scaleSize(5),
 
 
         },
@@ -183,8 +184,8 @@ const styles = StyleSheet.create({
 
     icon: {
 
-        width:40*width/750,
-        height:40*width/750,
+        width:scaleSize(40),
+        height:scaleSize(40),
 
     },
 

@@ -23,7 +23,7 @@ export default class MinePage extends Component {
     }
     componentDidMount () {
      // Fetch.fetchData('usermessage',{},(res)=>{
-      //    this.setState({userData:res});
+         this.setState({userData:{"data":{"userName":"孙海龙","jigou":"孙海龙","jigouid":"322242322DS","jigoucengji":"3级"}}});
           //console.log(this.state.userData.data.jigou);
      // })
     }
@@ -176,36 +176,21 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         height:'70%',
-       // backgroundColor: 'yellow',
+      //  backgroundColor: 'yellow',
     },
     headerMessage:{
         flex:2,
         height:'70%',
         // justifyContent:'center',
     },
-    // headerPower:{
-    //     flex:1,
-    //     height:120,
-    //     backgroundColor: 'blue',
-    // },
-    // mainMiddle:{
-    //     flex:0.4,
-    //     flexDirection:'row',
-    //     backgroundColor: 'blue',
-    // },
     mainBottom:{
         flex:3,
         paddingTop:20,
         backgroundColor: '#eef0f4',
     },
     userImg:{
-        width:'70%',
-       // width:100,
-       // height:100,
-        height:'88%',
-        //borderColor:'white',
-       // borderWidth:2,
-       // borderRadius: 50,
+        width:'80%',
+        resizeMode:'contain'
     },
     userImgWrraper:{
         width:120,

@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { StyleSheet, FlatList, View, Text, Image, TouchableOpacity } from 'react-native';
 
 import CornerLabel from './CornerLabel'
-
+import {setSpText,scaleSize} from '../Utils/Resolution';
+import Icon from './IconFont/IconFont';
 
 // 获取屏幕宽度
 const Dimensions = require("Dimensions");
@@ -57,6 +58,7 @@ export default class CommonSudoku extends Component {
     _renderItem = (Item) => {
         let name = Item.item.name;
         let image = Item.item.image;
+        let color = Item.item.color
         let hasdata = this.props.type[Item.index];
         // 判断是否是更多图标
         if (name === '全部') {
@@ -68,7 +70,7 @@ export default class CommonSudoku extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <Image source = {image} style = { styles.image } resizeMode = {'contain'}/>
+                        <Icon name={image} size={36} color={color} />
                         <Text style = { styles.txt }>
                             { name }
                         </Text>
@@ -92,7 +94,7 @@ export default class CommonSudoku extends Component {
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}>
-                            <Image source = { image } style = { styles.image } resizeMode = {'contain'}/>
+                            <Icon name={image} size={36} color={color} />
                             <Text style = { styles.txt }>
                                 { name }
                             </Text>
@@ -116,7 +118,7 @@ export default class CommonSudoku extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <Image source={image} style = { styles.image1 } resizeMode = {'contain'}/>
+                        <Icon name={image} size={36} color='gray' />
                         <Text style = { styles.txt1 }>
                             { name }
                         </Text>

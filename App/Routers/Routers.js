@@ -15,7 +15,7 @@ import CommonDetailPage from '../Common/CommonDetailPage';
 import AllSudokuPage from '../Pages/AllSudokuPage/AllSudokuPage'
 import LoginPage from '../Pages/Login/Login';
 import SplashPage from '../Pages/SplashPage';
-
+import SplashScreen from "rn-splash-screen";
 // 定义一个 StackNavigator
 const RootStack = createStackNavigator(
     {
@@ -39,7 +39,7 @@ const RootStack = createStackNavigator(
         Login:{
             screen: LoginPage,
             navigationOptions: {
-                headerBackImage:<Image style={{width:20,height:20,marginLeft:20}} source={require('../Res/Images/back.png')} />,
+                headerBackImage:<Image style={{width:20, height:20,marginLeft:20}} source={require('../Res/Images/back.png')} />,
                 // headerBackTitleStyle:{color:"red"},
                 //headerStyle:{color:"red"}
             }
@@ -56,5 +56,8 @@ export default class Routers extends React.Component {
         return <RootStack ref={navigatorRef=>{
             NavigationService.setTopLevelNavigator(navigatorRef);
         }} />
+    }
+    componentDidMount() {
+            SplashScreen.hide();
     }
 }

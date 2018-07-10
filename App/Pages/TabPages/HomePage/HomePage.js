@@ -11,15 +11,73 @@ import {
     Image,
     AsyncStorage,
     TouchableOpacity,
-    TouchableHighlight,
     ImageBackground,
-    Modal
+    Modal,
+    DeviceInfo,
+    NativeModules,
+    Platform
 } from 'react-native';
-import { Slider } from 'IFTide';
 import CommonSudoku from '../../../Common/CommonSudoku';
+import Swiper from '../../../Utils/Swiper';
 import { HomeSudokuData } from "../../../Res/Data/HomeSudoku";
-var Dimensions = require('Dimensions');
-var {width,height} = Dimensions.get('window');
+import {setSpText,scaleSize} from '../../../Utils/Resolution';
+let Dimensions = require('Dimensions');
+import SafeAreaView from 'react-native-safe-area-view';
+let {width,height} = Dimensions.get('window');
+let sudokuitem ;
+//判断是否iphonex
+
+// See https://mydevice.io/devices/ for device dimensions
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
+
+const { height: D_HEIGHT, width: D_WIDTH } = Dimensions.get('window');
+
+const { PlatformConstants = {} } = NativeModules;
+const { minor = 0 } = PlatformConstants.reactNativeVersion || {};
+
+const isIPhoneX = (() => {
+    if (Platform.OS === 'web') return false;
+
+    if (minor >= 50) {
+        return DeviceInfo.isIPhoneX_deprecated;
+    }
+
+    return (
+        Platform.OS === 'ios' &&
+        ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) ||
+            (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT))
+    );
+})();
+
+/*const isPad = (() => {
+
+  // if portrait and width is smaller than iPad width
+  if (D_HEIGHT > D_WIDTH && D_WIDTH < PAD_WIDTH) {
+    return false;
+  }
+
+  // if landscape and height is smaller that iPad height
+  if (D_WIDTH > D_HEIGHT && D_HEIGHT < PAD_WIDTH) {
+    return false;
+  }
+
+  return true;
+})();*/
+
+if (isIPhoneX) {
+    sudokuitem = 100;
+
+}
+/*else if(isPad){
+    sudokuitem = (height-scaleSize(110)-scaleSize(399)-scaleSize(41)-scaleSize(246))/3;
+    bgpicwidth = width;
+    swipewidth = width;
+}*/
+else{
+    sudokuitem = (height-scaleSize(110)-scaleSize(399)-scaleSize(41)-scaleSize(246))/3;
+}
+
 export default class HomePage extends Component {
     constructor(props){
         super(props);
@@ -27,7 +85,8 @@ export default class HomePage extends Component {
         this.state = {
             data:[],//存储列表数据
             type:[], //存储九宫格跳转类型
-            splash:true,
+            splash:false,
+            swiperShow:false,
         };
     }
     componentWillMount() {
@@ -43,6 +102,7 @@ export default class HomePage extends Component {
         this.timer = setTimeout(() => {
             this.setState({
                 splash:false,
+                swiperShow:true,
             })
         },2000)
 
@@ -50,15 +110,18 @@ export default class HomePage extends Component {
     componentWillUnmount(){
         this.timer && clearTimeout(this.timer)
     }
+
+
     render() {
 
-        let sliderdata = [
+   /*     let sliderdata = [
             { img: require('../../../Res/Images/轮播图1.png'), id: 1 },
             { img: require('../../../Res/Images/轮播图2.png'), id: 2 },
             { img: require('../../../Res/Images/轮播图3.png'), id: 3 },
             { img: require('../../../Res/Images/轮播图4.png'), id: 4 },
-        ];
+        ];*/
         return (
+            <SafeAreaView style={{flex:1}}>
                 <ScrollView>
                     <Modal visible={this.state.splash}
                                     onRequestClose = {() => {}}
@@ -86,7 +149,7 @@ export default class HomePage extends Component {
                         </ImageBackground>
 
                         <View style={styles.carousel}>
-                            <Slider
+                            {/*<Slider
                                 data={sliderdata}
                                 duration={3000}
                                 loop={true}
@@ -95,7 +158,8 @@ export default class HomePage extends Component {
                                 pagination={true}
                                 itemHeight={246*width/750}
                                 activeOpacity={1}
-                            />
+                            />*/}
+                            {this.renderSwiper()}
                         </View>
                         <View style={styles.sodoku}>
                             <CommonSudoku
@@ -105,11 +169,12 @@ export default class HomePage extends Component {
                                 onPressFn={this._onPressFn.bind(this)}
                                 onPressFnMore={this._onPressFnMore.bind(this)}
                                 headerName={null}
-                                height={(height-110*width/750-399*width/750-21-246*width/750-20)/3}
+                                height={sudokuitem}
                             />
                         </View>
                     </View>
                 </ScrollView>
+            </SafeAreaView>
         );
     }
     //跳转到搜索页
@@ -117,6 +182,38 @@ export default class HomePage extends Component {
         this.props.navigation.navigate('Search',{info:this.refs.Sudoku.state.name})
     };
     itemClick (){
+
+    };
+    renderSwiper=()=>{
+        if(this.state.swiperShow){
+            return(
+                <Swiper
+                    style={styles.slider}
+                    height={scaleSize(246)}
+                    loop={true}
+                    autoplay={true}
+                    autoplayTimeout={2}
+                    horizontal={true}
+                    paginationStyle={{bottom:scaleSize(10)}}
+                    showButton={false}
+                    showsPagination={true}
+                    dotStyle={{marginLeft:scaleSize(10)}}
+                    activeDotStyle={{marginLeft:scaleSize(10)}}
+                    dotColor={'white'}
+                >
+                    <Image source={require('../../../Res/Images/轮播图1.png')} style={styles.img}/>
+                    <Image source={require('../../../Res/Images/轮播图2.png')} style={styles.img}/>
+                    <Image source={require('../../../Res/Images/轮播图3.png')} style={styles.img}/>
+                    <Image source={require('../../../Res/Images/轮播图4.png')} style={styles.img}/>
+                </Swiper>
+            )
+        }else{
+            return(
+                <View style={{height:scaleSize(246)}}>
+                    <Image source={require('../../../Res/Images/轮播图4.png')} style={styles.img}/>
+                </View>
+            )
+        }
 
     };
     //跳转到全部九宫格
@@ -135,7 +232,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
 
         width:width,
-        height:399*width/750,
+        height:scaleSize(399),
     },
     header:{
         flexDirection:"row",
@@ -144,25 +241,25 @@ const styles = StyleSheet.create({
 
     },
     logo:{
-        width:255*width/750,
-        height:56*width/750,
+        width:scaleSize(255),
+        height:scaleSize(56),
 
     },
     line:{
         width:1,
-        height:52*width/750,
-        marginLeft:10,
+        height:scaleSize(52),
+        marginLeft:scaleSize(10),
     },
     title:{
-        width:262*width/750,
-        height:73*width/750,
-        marginLeft:10,
+        width:scaleSize(262),
+        height:scaleSize(73),
+        marginLeft:scaleSize(10),
     },
     searchBox:{
-        width:625*width/750,
-        height:85*width/750,
+        width:scaleSize(625),
+        height:scaleSize(85),
         padding:0,
-        marginTop:20,
+        marginTop:scaleSize(20),
         backgroundColor:'white',
         flexDirection:'row',
         alignItems:'center',
@@ -171,7 +268,7 @@ const styles = StyleSheet.create({
     searchIcon:{
         height:20,
         width:20,
-        marginLeft:20,
+        marginLeft:scaleSize(20),
 
 
     },
@@ -179,36 +276,40 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor:'transparent',
         fontSize:13,
-        marginLeft:20,
+        marginLeft:scaleSize(20),
         color:'#333333',
         opacity:0.4,
     },
     voiceIcon:{
         height:20,
         width:20,
-        marginLeft:5,
-        marginRight:20,
+        marginLeft:scaleSize(5),
+        marginRight:scaleSize(20),
 
     },
     carousel:{
 
-        marginTop:5,
+        marginTop:scaleSize(5),
 
     },
     sodoku:{
-        marginTop:5,
+        marginTop:scaleSize(5),
         backgroundColor:'white',
         width:width,
-        // height:650*width/750,
         borderBottomWidth:1,
         borderBottomColor:'#dfdfdf',
+        height:height-scaleSize(110)-scaleSize(399)-scaleSize(41)-scaleSize(246),
     },
     slider:{
         backgroundColor:'white',
-
     },
     splash:{
         height:height,
         width:width,
+    },
+
+    img:{
+        width:scaleSize(750),
+        height:scaleSize(246),
     }
 });

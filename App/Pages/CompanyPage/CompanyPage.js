@@ -25,7 +25,8 @@ let pageNo = "1";
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export default class CompanyPagePage extends Component {
+
+export default class CompanyPage extends Component {
     static navigationOptions = ({ navigation }) => {
         const { state: {params}} = navigation
         return {
@@ -34,7 +35,6 @@ export default class CompanyPagePage extends Component {
                 textAlign: 'center',
                 alignSelf: 'center',
                 flex:1,
-                color:'#333333',
             },
             headerRight: (<View></View>)
         }
@@ -59,20 +59,23 @@ export default class CompanyPagePage extends Component {
             RiskType:RiskSudokuData[1],
             InformationData:InformationSudokuData[0],
             InformationType:InformationSudokuData[1],
+            // visible:true,
         })
+
     }
-    componentWillUnmount() {
+
+    componentWillUnmount(){
         this.timer && clearTimeout(this.timer)
     }
+
     _setModalVisible() {
         this.setState({
             visible: false,
         })
     }
     render() {
-        const { state: {params}} = this.props.navigation
-        let data = this.props.navigation.state.params.company
-        console.log(data)
+        const { state: {params}} = this.props.navigation;
+        let data = this.props.navigation.state.params.company, style;
         return (
             <View>
                 <MessageBox
@@ -81,13 +84,13 @@ export default class CompanyPagePage extends Component {
                     title={'提示'}
                     detailText={this.state.ErrorMsg}
                     onClose={() => {}}
-                    />
+                />
                 <Modal
                     visible={this.state.visible}
                     animationType={'fade'}
-                    onReaquestClose={this._setModalVisible}
-                    backgroundColor='rgba(255,255,255,0)'
-                    transparent={true}
+                    onRequestClose={this._setModalVisible}
+                    backgroudColor='rgba(255,255,255,0)'
+                    transparent = {true}
                 >
                     <View style={styles.loadingCircle}>
                         <ActivityIndicator
@@ -148,7 +151,6 @@ export default class CompanyPagePage extends Component {
                             </View>
                         </View>
                     </View>
-
                     <View style={styles.sodoku}>
                         <CommonSudoku
                             ref={'RiskSudoku'}
@@ -168,23 +170,9 @@ export default class CompanyPagePage extends Component {
 
                         />
                     </View>
-                    {/*<View style={styles.header}>*/}
-                        {/*<Text style={styles.txt}>族谱</Text>*/}
-                        {/*<View style={styles.Line}>*/}
-                        {/*</View>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.header}>*/}
-                        {/*<Text style={styles.txt}>报告</Text>*/}
-                        {/*<View style={styles.Line}>*/}
-                        {/*</View>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.header}>*/}
-                        {/*<Text style={styles.txt}>国际</Text>*/}
-                        {/*<View style={styles.Line}>*/}
-                        {/*</View>*/}
-                    {/*</View>*/}
-
+                    
                 </ScrollView>
+
             </View>
         )
     }
@@ -195,7 +183,8 @@ export default class CompanyPagePage extends Component {
         })
         this.timer = setTimeout(() => {
             this._setModalVisible()
-        }, 2000)
+        },2000)
+
         let thiz = this;
         let companyName = this.props.navigation.state.params.company.ENTNAME
         let pressRiskName = this.refs.RiskSudoku.state.name;
@@ -229,7 +218,7 @@ export default class CompanyPagePage extends Component {
         })
         this.timer = setTimeout(() => {
             this._setModalVisible()
-        }, 2000)
+        },2000)
 
         let thiz = this;
         let companyName = this.props.navigation.state.params.company.ENTNAME;
@@ -302,18 +291,21 @@ export default class CompanyPagePage extends Component {
 
 
 const styles = StyleSheet.create({
-    loadingCircle: {
+    loading:{
+
+    },
+    loadingCircle:{
         alignItems: 'center',
         justifyContent: 'center',
-        height: SCREEN_HEIGHT,
-        width: SCREEN_WIDTH,
+        height:SCREEN_HEIGHT,
+        width:SCREEN_WIDTH,
     },
     container: {
-        backgroundColor: '#F5FCFF',
+
     },
     sodoku:{
         marginTop:8,
-
+        marginBottom:0,
         backgroundColor:'white',
     },
     seachResult:{
@@ -369,8 +361,7 @@ const styles = StyleSheet.create({
         borderRadius:4,
     },
     seachResultListTitleRightText:{
-        color:'#67c94d',
-        fontSize:10,
+        color:'#67c94d'
     },
     seachResultListTitle:{
         paddingLeft:20,
