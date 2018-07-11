@@ -165,7 +165,6 @@ export default class HomePage extends Component {
                             <CommonSudoku
                                 ref={'Sudoku'}
                                 data={this.state.data}
-                                type={this.state.type}
                                 onPressFn={this._onPressFn.bind(this)}
                                 onPressFnMore={this._onPressFnMore.bind(this)}
                                 headerName={null}

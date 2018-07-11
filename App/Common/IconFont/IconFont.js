@@ -1,5 +1,8 @@
 import {createIconSet} from "react-native-vector-icons"
 const glyphMap = {
+    "quanbu":58922,
+    "guanzhu":59058,
+    "guanzhudianjitai":59057,
     "anquanweigui":58962,
     "anjianliucheng":58963,
     "biangengxinxi":58964,
@@ -98,6 +101,6 @@ const glyphMap = {
 };
 
 
-const IconFont = createIconSet(glyphMap, 'iconfont', 'iconfont.ttf');
+const IconFont = createIconSet(glyphMap, 'iconfont', 'IconFont.ttf');
 
 export default IconFont;

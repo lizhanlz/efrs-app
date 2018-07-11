@@ -5,7 +5,7 @@ import { StyleSheet, FlatList, View, Text, Image, TouchableOpacity } from 'react
 
 import CornerLabel from './CornerLabel'
 import {setSpText,scaleSize} from '../Utils/Resolution';
-import Icon from './IconFont/IconFont';
+import IconFont from './IconFont/IconFont';
 
 // 获取屏幕宽度
 const Dimensions = require("Dimensions");
@@ -19,6 +19,7 @@ const cellWidth = (width) / 4;  // 元素宽度
 export default class CommonSudoku extends Component {
     static defaultProps = {
         height: 90,
+        type:[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
     }
 
     constructor (props) {
@@ -70,7 +71,7 @@ export default class CommonSudoku extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <Icon name={image} size={36} color={color} />
+                        <IconFont name={image} size={36} color={color} />
                         <Text style = { styles.txt }>
                             { name }
                         </Text>
@@ -94,7 +95,7 @@ export default class CommonSudoku extends Component {
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}>
-                            <Icon name={image} size={36} color={color} />
+                            <IconFont name={image} size={36} color={color} />
                             <Text style = { styles.txt }>
                                 { name }
                             </Text>
@@ -118,7 +119,7 @@ export default class CommonSudoku extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <Icon name={image} size={36} color='gray' />
+                        <IconFont name={image} size={36} color='gray' />
                         <Text style = { styles.txt1 }>
                             { name }
                         </Text>

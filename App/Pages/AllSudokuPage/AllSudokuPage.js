@@ -53,7 +53,6 @@ export default class AllSudokuPage extends Component {
                     <CommonSudoku
                         ref={'RiskSudoku'}
                         data={this.state.RiskData}
-                        type={this.state.RiskType}
                         onPressFn={this._onPressFn.bind(this)}
                         headerName={'风险信息'}
                     />
@@ -62,7 +61,6 @@ export default class AllSudokuPage extends Component {
                     <CommonSudoku
                         ref={'InformationSudoku'}
                         data={this.state.InformationData}
-                        type={this.state.InformationType}
                         onPressFn={this._onPressFn.bind(this)}
                         headerName={'情报信息'}
 

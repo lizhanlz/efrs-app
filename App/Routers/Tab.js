@@ -7,6 +7,7 @@ import {
     StyleSheet,
     Image, AsyncStorage,
 } from 'react-native';
+import Icon from '../Common/IconFont/IconFont';
 
 import HomePage from '../Pages/TabPages/HomePage/HomePage';
 import RiskPage from '../Pages/TabPages/RiskPage/RiskPage';
@@ -31,13 +32,11 @@ const Tab = TabNavigator({
         navigationOptions: {
             title: '首页',
             tabBarLabel: '首页',
-            tabBarIcon: ({ tintColor }) => (
-                <Image
-                    source = {
-                        require('../Res/Images/首页.png')
-                    }
-                    style={[ styles.icon, { tintColor: tintColor }]} // { tintColor: tintColor } 选中的图片和文字颜色
-                />
+            tabBarIcon: ({focused}) => (
+                <Icon
+                    name = {focused ? 'ronganexindianjitai' : 'ronganexin'}
+                    size = {28}
+                    color = { focused ? '#e63c27' : '#646464' }/>
             ),
             headerTitleStyle: {
                 alignSelf: 'center'
@@ -50,13 +49,11 @@ const Tab = TabNavigator({
         navigationOptions: {
             title: '风险提示',
             tabBarLabel: '风险提示',
-            tabBarIcon: ({ tintColor }) => (
-                <Image
-                    source = {
-                        require('../Res/Images/风险.png')
-                    }
-                    style={[ styles.icon, { tintColor: tintColor }]} // { tintColor: tintColor } 选中的图片和文字颜色
-                />
+            tabBarIcon: ({focused}) => (
+                <Icon
+                    name = {focused ? 'fengxianditudianjitai' : 'fengxianditu'}
+                    size = {28}
+                    color = { focused ? '#e63c27' : '#646464' }/>
             ),
             headerTitleStyle: {
                 alignSelf: 'center'
@@ -107,13 +104,11 @@ const Tab = TabNavigator({
         navigationOptions: {
             title: '关注',
             tabBarLabel: '关注',
-            tabBarIcon: ({ tintColor }) => (
-                <Image
-                    source = {
-                        require('../Res/Images/关注.png')
-                    }
-                    style={[ styles.icon, { tintColor: tintColor }]} // { tintColor: tintColor } 选中的图片和文字颜色
-                />
+            tabBarIcon: ({focused}) => (
+                <Icon
+                    name = {focused ? 'guanzhudianjitai' : 'guanzhu'}
+                    size = {28}
+                    color = { focused ? '#e63c27' : '#646464' }/>
             ),
             headerTitleStyle: {
                 alignSelf: 'center'
@@ -126,13 +121,11 @@ const Tab = TabNavigator({
         navigationOptions: {
             title: '我的',
             tabBarLabel: '我的',
-            tabBarIcon: ({ tintColor }) => (
-                <Image
-                    source = {
-                        require('../Res/Images/我的.png')
-                    }
-                    style={[ styles.icon, { tintColor: tintColor }]} // { tintColor: tintColor } 选中的图片和文字颜色
-                />
+            tabBarIcon: ({focused}) => (
+                <Icon
+                    name = {focused ? 'wodedianjitai' : 'wode'}
+                    size = {28}
+                    color = { focused ? '#e63c27' : '#646464' }/>
             ),
             headerTitleStyle: {
                 alignSelf: 'center'
@@ -166,14 +159,15 @@ const Tab = TabNavigator({
 
         },
         iconStyle:{
-            width:scaleSize(40),
-            height:scaleSize(40),
-            marginTop:scaleSize(3),
+            top:scaleSize(0),
+            width:scaleSize(60),
+            height:scaleSize(65),
+            marginTop:scaleSize(-5),
+
         },
         labelStyle: {
             fontSize: 12, // 文字大小
-            marginTop:scaleSize(5),
-
+            marginTop:scaleSize(-5),
 
         },
     },

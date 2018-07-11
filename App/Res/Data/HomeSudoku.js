@@ -11,7 +11,7 @@ export const HomeSudokuData = [
         {name: '税收违法', image: 'shuishouweifa', color: '#1976D2'},
         {name: '企业年报', image: 'qiyenianbao', color: '#FFA726'},
         {name: '法院公告', image: 'fayuangonggao', color: '#FFA726'},
-        {name: '全部', image: 'gengduo', color: '#1976D2'}
+        {name: '全部', image: 'quanbu', color: '#1976D2'}
     ],
     [1 ,1 , 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
